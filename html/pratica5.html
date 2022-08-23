@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Dash.js + Explorando Métricas</title>
+        <style>
+            video {
+                width: 640px;
+                height: 360px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <video id="videoPlayer" controls></video>
+        </div>
+        <script src="js/dash.all.min.js"></script>
+        <script src="js/LowestBitrateRule_2.js" class="code"></script>
+        <script>
+            (function(){
+                var video = document.querySelector("#videoPlayer");
+                var url = "https://dash.akamaized.net/akamai/streamroot/050714/Spring_4Ktest.mpd";
+                var player = dashjs.MediaPlayer().create();
+                
+                /* don't use dash.js default rules */
+                player.updateSettings({
+                    'streaming': {
+                        'abr': {
+                            'useDefaultABRRules': false
+                        }
+                    }
+                });
+
+                player.addABRCustomRule('qualitySwitchRules', 'LowestBitrateRule', LowestBitrateRule);
+
+                var currentSettings = player.getSettings();
+                console.log(currentSettings);
+
+                player.initialize(video, url, true); 
+            })();
+        </script>
+    </body>
+</html>

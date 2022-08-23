@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Dash.js + ABRStrategy</title>
+        <style>
+            video {
+                width: 640px;
+                height: 360px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <video id="videoPlayer" controls></video>
+        </div>
+        <script src="js/dash.all.min.js"></script>
+        <script>
+            (function(){
+                var video = document.querySelector("#videoPlayer");
+                var url = "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd";
+                var player = dashjs.MediaPlayer().create();
+                
+                player.updateSettings({
+                'streaming': {
+                    'abr': {
+                        'useDefaultABRRules': true,
+                        'ABRStrategy': 'abrBola'
+                    }
+                }
+                });
+
+                var currentSettings = player.getSettings();
+                console.log(currentSettings);
+
+                player.initialize(video, url, true); 
+            })();
+        </script>
+    </body>
+</html>
