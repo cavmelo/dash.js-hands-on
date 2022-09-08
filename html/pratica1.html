@@ -1,26 +1,57 @@
 <!doctype html>
 <html>
+    <style>
+      .terminal{
+        background: black;
+        color: #7AFB4C;
+        overflow: auto;
+        width: 640px;
+        height: 160px;
+        border-radius: 5px;
+      }
+      .video {
+            width: 640px;
+            height: 360px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+      }
+      video:hover{
+        border-radius:5px;
+      }
+      .command {
+        padding: 8px 0px 0px 8px;
+        background: green;
+        overflow: auto;
+        width: 640px;
+        height: 50px;
+        border-radius: 5px;
+      }
+    </style>
+
     <head>
         <title>Dash.js + Configuração Padrão</title>
-        <style>
-            video {
-                width: 640px;
-                height: 360px;
-            }
-        </style>
+
+        <script src="html/js/dash.all.min.js"></script>
+        <script src="html/js/pratica1.js"></script>
+        <script src="html/js/logger.js"></script>
+
     </head>
     <body>
+      <div>
         <div>
-            <video id="videoPlayer" controls></video>
+            <video class="video" id="videoPlayer" autoplay="" controls></video>
         </div>
-        <script src="js/dash.all.min.js"></script>
-        <script>
-            (function(){
-                var video = document.querySelector("#videoPlayer");
-                var url = "https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd";
-                var player = dashjs.MediaPlayer().create();
-                player.initialize(video, url, true); 
-            })();
-        </script>
+        <div>
+            <textarea class="terminal" id="log" rows="10"></textarea>
+        </div>
+      </div>
+      <div class="command">
+        <input id="filename" placeholder="nome do arquivo..." />
+        <button id="download">Salve arquivo</button>
+        <button id="clear">Limpar</button>
+      </div>
+      <script>
+        window.onload = () => {initPlayer();initLogger();};
+      </script>
     </body>
 </html>
