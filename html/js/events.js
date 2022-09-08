@@ -44,15 +44,11 @@ function showEvent(e){
 function initPlayer(){
     logger = document.querySelector("#log");
     video = document.querySelector("#videoPlayer");
-    //var url = "https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd";
-    //var url = "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd"
     //var url = "http://rdmedia.bbc.co.uk/dash/ondemand/elephants\_dream/1/client\_manifest\-all.mpd"
     //var url = "http://rdmedia.bbc.co.uk/dash/ondemand/bbb/2/client_manifest-common_init.mpd";
     var url = "https://bitmovin-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd"
     player = dashjs.MediaPlayer().create();
     player.on(dashjs.MediaPlayer.events['QUALITY_CHANGE_REQUESTED'],processEvent);
-    //player.on(dashjs.MediaPlayer.events['PLAYBACK_STALLED'], processEvent);
-    //player.on(dashjs.MediaPlayer.events['PLAYBACK_PAUSED'], showEvent);
     player.on(dashjs.MediaPlayer.events['BUFFER_LOADED'],processEvent);
     player.on(dashjs.MediaPlayer.events['BUFFER_EMPTY'],processEvent);
     player.on(dashjs.MediaPlayer.events['PLAYBACK_STARTED'], processEvent);
