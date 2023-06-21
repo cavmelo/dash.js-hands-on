@@ -46,7 +46,7 @@ function RandomBitrateRuleClass() {
         logger = Debug(context).getInstance().getLogger(instance);
     }
 
-    // Always use lowest bitrate
+    // Random selected bitrate
     function getMaxIndex(rulesContext) {
         // here you can get some informations aboit metrics for example, to implement the rule
         let metricsModel = MetricsModel(context).getInstance();
@@ -55,7 +55,7 @@ function RandomBitrateRuleClass() {
 
         
         count =  rulesContext.getMediaInfo().representationCount;
-        selectedBitrate = count-1;//Math.floor(Math.random() * count);
+        selectedBitrate = Math.floor(Math.random() * count);
         // Number of representations
         logger.info("Segment bitrate: "+selectedBitrate);
 
@@ -77,6 +77,6 @@ function RandomBitrateRuleClass() {
     return instance;
 }
 
-RandomBitrateRuleClass.__dashjs_factory_name = 'RandomBitrateRule';
+RandomBitrateRuleClass.__dashjs_factory_name = 'abrRandom';
 RandomBitrateRule = dashjs.FactoryMaker.getClassFactory(RandomBitrateRuleClass);
 

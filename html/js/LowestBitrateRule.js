@@ -47,7 +47,7 @@ function LowestBitrateRuleClass() {
     function getMaxIndex(rulesContext) {
         // here you can get some informations aboit metrics for example, to implement the rule
         let mediaType = rulesContext.getMediaInfo().type;
-
+                    
         // Get current bitrate
         let streamController = StreamController(context).getInstance();
         let abrController = rulesContext.getAbrController();
@@ -77,5 +77,5 @@ function LowestBitrateRuleClass() {
     return instance;
 }
 
-LowestBitrateRuleClass.__dashjs_factory_name = 'LowestBitrateRule';
+LowestBitrateRuleClass.__dashjs_factory_name = 'abrLowest';
 LowestBitrateRule = dashjs.FactoryMaker.getClassFactory(LowestBitrateRuleClass);

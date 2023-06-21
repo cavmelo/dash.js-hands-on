@@ -49,8 +49,10 @@ function showEvent(e, anyway){
       entryLog['details'].push({[name]:[e[name]]});
     }
   }
-  if (e.type == 'fragmentLoadingStarted')
-    entryLog['details'] = [];
+  if ( (e.type == 'fragmentLoadingStarted') || 
+    (e.type == 'fragmentLoadingCompleted') || 
+    (e.type == 'fragmentLoadingAbandoned') )
+    //entryLog['details'] = [];
 
   if ( (status) || (anyway) )
     addLog(timestamp,entryLog);
@@ -59,8 +61,8 @@ function showEvent(e, anyway){
 function initPlayer(){
     logger = document.querySelector("#log");
     video = document.querySelector("#videoPlayer");
-    //var url = "https://rdmedia.bbc.co.uk/elephants_dream/1/client_manifest-all.mpd"
-    var url = "https://rdmedia.bbc.co.uk/bbb/2/client_manifest-common_init.mpd";
+    var url = "https://rdmedia.bbc.co.uk/elephants_dream/1/client_manifest-all.mpd"
+    //var url = "https://rdmedia.bbc.co.uk/bbb/2/client_manifest-common_init.mpd";
    
     player = dashjs.MediaPlayer().create();
     player.on(dashjs.MediaPlayer.events['BUFFER_LOADED'],processEvent);
@@ -72,15 +74,18 @@ function initPlayer(){
     player.on(dashjs.MediaPlayer.events['PLAYBACK_ENDED'], processEvent);
     player.on(dashjs.MediaPlayer.events['MANIFEST_LOADED'], processEvent);
     player.on(dashjs.MediaPlayer.events['FRAGMENT_LOADING_STARTED'], processEvent);
+    player.on(dashjs.MediaPlayer.events['FRAGMENT_LOADING_COMPLETED'], processEvent);
+    player.on(dashjs.MediaPlayer.events['FRAGMENT_LOADING_ABANDONED'], processEvent);
 
-    //player.addABRCustomRule('qualitySwitchRules', 'abrLowest', LowestBitrateRule);
+    player.addABRCustomRule('qualitySwitchRules', 'abrLowest', LowestBitrateRule);
     
     player.updateSettings({
       'streaming': {
           'abr': {
-              'useDefaultABRRules': true,
-              'ABRStrategy': 'abrThroughput',
-//              'ABRStrategy': 'abrLowest',
+              'useDefaultABRRules': false,
+ //             'ABRStrategy': 'abrBola',
+//              'ABRStrategy': 'abrThroughput',
+              'ABRStrategy': 'abrLowest',
               'additionalAbrRules':{
                   'insufficientBufferRule': false,
                   'switchHistoryRule': false,
